@@ -1,0 +1,26 @@
+h1 {
+    margin-left: 15px;
+    margin-bottom: 20px;
+}
+
+.layout-padrao{
+    margin-left: 0px;
+    margin-top: 50px;
+}
+
+.espaco{
+    margin-top: 6%;
+}
+
+.font{
+    font-size: 18px;
+}
+
+.panel-default > .panel-heading{
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    color: #fff;
+}
+.navbar-right.menu-superior{
+    margin-right: 3%;
+}

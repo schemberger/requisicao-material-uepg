@@ -1,0 +1,31 @@
+.margin-material{
+    margin-top: 3%;
+}
+
+/*
+css form gerais
+*/
+
+.bloqueado{
+    background-color: transparent
+}
+
+.gif{
+    width: auto;
+    height: 250px;
+}
+.test{
+ margin-top:0.5%;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
+    background-color: transparent;
+}
+
+.top{
+    margin-top: 5%;
+}
+
+.tabela{
+    margin-top: 4%;
+}
