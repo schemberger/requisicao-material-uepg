@@ -183,7 +183,6 @@ class ReqMaterialController extends Controller
             alert()->success('Requisição incluida com Sucesso.', '');
 
             if ($request->tp_rm == 1) {
-
                 return redirect('item_req_material/' . $request->nr_rm . '/' . $request->ano_rm . '/' . $request->cd_centro . '/createMaterial');
             } else {
                 return redirect('item_req_material/' . $request->nr_rm . '/' . $request->ano_rm . '/' . $request->cd_centro . '/createServico');
@@ -201,9 +200,9 @@ class ReqMaterialController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $ano_rm, $cd_centro)
     {
-        //
+        return view('req_material.visualizar');
     }
 
     /**
@@ -221,7 +220,62 @@ class ReqMaterialController extends Controller
             ->where('CD_CENTRO', $cd_centro)
             ->first();
 
-        return view('req_material.edit', compact('requisicao'));
+        $orgao = DB::table('asseplan..centro_custo')
+            ->where('cd_centro', $cd_centro)
+            ->first();
+
+        $orgao_dest = DB::table('asseplan..centro_custo')
+            ->select('nm_centro', 'cd_centro')
+            ->where('tp_ativ_dest', 'N')
+            ->get();
+
+        $orgao_dest_aux = DB::table('asseplan..centro_custo')
+            ->where('cd_centro', $requisicao->CD_CCDEST)
+            ->first();
+
+        $receptores = DB::table('estoque..RECEPTOR_CC')
+            ->select('RECEPTORES')
+            ->where('cd_centro', $requisicao->CD_CCDEST)
+            ->first();
+
+        $fonte = DB::table('fonte')
+            ->distinct('nm_fonte')
+            ->where('cd_ativo', 'S')
+            ->get();
+
+        $fonte_aux = DB::table('fonte')
+            ->distinct('nm_fonte')
+            ->where('cd_fonte', $requisicao->CD_FONTE)
+            ->where('cd_ativo', 'S')
+            ->get();
+
+        $usuario = Auth::user()->username;
+
+        //inicialmente usar usuario trrebonato para fazer busca
+        $emissor = DB::table('acesso_g..usuario')
+            ->where('cd_usuario', 'trrebonato')
+            ->first();
+
+        $item_rm = DB::table('Item_rm')
+            ->where('nr_rm', $requisicao->NR_RM)
+            ->where('ano_rm', $requisicao->ANO_RM)
+            ->where('cd_centro', $requisicao->CD_CENTRO)
+            ->get();
+
+        //if = true significa que ja possui itens cadastrados nessa RM, portanto nao sendo possivel alterar de servico para material
+//        ou o contrario
+        if(count($item_rm)){
+            $opcao_tipo_requisicao = "bloqueado";
+        }else{
+            $opcao_tipo_requisicao = "liberado";
+        }
+
+        $cd_centro = $cd_centro;
+        $ano_rm = $data;
+        $nr_rm = $id;
+
+        return view('req_material.edit', compact('requisicao', 'orgao', 'orgao_dest', 'fonte', 'fonte_aux',
+            'emissor','orgao_dest_aux', 'receptores', 'cd_centro', 'ano_rm', 'nr_rm', 'opcao_tipo_requisicao'));
 
     }
 
@@ -250,7 +304,39 @@ class ReqMaterialController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+//        dd($request);
+
+        if($request->cd_fonte == ""){
+            $request->cd_fonte = null;
+        }
+
+        try{
+
+            DB::table('Requisicao_Material')
+                ->where('NR_RM', $id)
+                ->where('ANO_RM', $request->ano_rm)
+                ->where('CD_CENTRO', $request->cd_centro)
+                ->update([
+
+                    'TP_RM' => $request->tp_rm,
+                    'CD_CCDEST' => $request->cd_ccdest,
+                    'COMPL_DEST' => $request->compl_dest,
+                    'LOC_ENTRG' => $request->loc_entrg,
+                    'RECEPTOR' => $request->receptor,
+                    'JUSTIFICA' => $request->justifica,
+                    'OBS' => $request->obs,
+                    'CD_FONTE' => $request->cd_fonte,
+                    'NR_CTAUEPG' => $request->nr_ctauepg
+
+                ]);
+
+            alert()->success('Requisição alterada com Sucesso.', '');
+
+            return redirect('req_material/showTable/'.$request->ano_rm.'/'.$request->cd_centro);
+
+        }catch (Exception $e){
+            return redirect('req_material')->with('error', 'Algo de errado aconteceu, por favor entre em contato com o NTI.');
+        }
     }
 
     /**

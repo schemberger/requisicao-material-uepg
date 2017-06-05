@@ -48,7 +48,7 @@
                     <thead>
                     <th>Número</th>
                     <th>Data</th>
-                    <th class="text-center">Justificativa</th>
+                    <th class="text-center col-xs-7">Justificativa</th>
                     <th>Orçamento</th>
                     <th>
                         <div style="width: 10%">Visualizar</div>
@@ -81,16 +81,16 @@
                                 @endif
                             </td>
 
-                            <td class="text-right">
+                            <td class="text-center">
                                 <a class="btn btn-info glyphicon glyphicon-search" role="button"
-                                   href="{{url('req_material/show')}}"></a>
+                                   href="{{url('req_material/show/'.$ta->nr_rm.'/'.date('Y', strtotime($ta->dt_emissao)).'/'.$ta->CD_CENTRO)}}"></a>
                             </td>
 
-                            <td class="text-right">
+                            <td class="text-center">
                                 <a class="btn btn-danger glyphicon glyphicon-trash delete" role="button" id="delete"
                                    href="{{url('req_material/'.$ta->nr_rm.'/'.date('Y', strtotime($ta->dt_emissao)).'/'.$ta->CD_CENTRO.'/'.'delete')}}"></a>
                             </td>
-                            <td class="text-right">
+                            <td class="text-center">
                                 <a class="btn btn-warning glyphicon glyphicon-pencil edit" id="edit"
                                    href="{{url('req_material/'.$ta->nr_rm.'/'.date('Y', strtotime($ta->dt_emissao)).'/'.$ta->CD_CENTRO.'/'.'edit')}}"></a>
                             </td>

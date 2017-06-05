@@ -1,7 +1,3 @@
-@push('script')
-
-@endpush
-
 @extends('layouts.body')
 
 @section('content')
@@ -9,14 +5,6 @@
 
     <fieldset>
 
-        <!-- Text input-->
-        <div class="form-group">
-            <label class="col-md-4 control-label">Ano da Requisição</label>
-            <div class="col-md-3">
-                <input id="textinput" name="ano_rm" value="{{date('Y')}}" class="form-control input-md bloqueado"
-                       type="text" disabled>
-            </div>
-        </div>
         <input type="hidden" name="ano_rm" value="{{date('Y')}}">
 
         <!-- Text input-->
@@ -27,6 +15,7 @@
                        type="text" disabled>
             </div>
         </div>
+
         <input type="hidden" name="cd_centro" value="{{$orgao->cd_centro}}">
 
         <!-- Text input-->

@@ -38,6 +38,8 @@ Route::group(['middleware' => 'sgiauth'], function() {
 
     Route::get('req_material/create/{id}', 'ReqMaterialController@create');
 
+    Route::get('req_material/show/{id}/{data}/{cd_centro}', 'ReqMaterialController@show');
+
     Route::resource('req_material', 'ReqMaterialController');
 
     //Rotas para Itens da requisicao de material
