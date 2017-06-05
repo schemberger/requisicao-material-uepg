@@ -200,9 +200,43 @@ class ReqMaterialController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $ano_rm, $cd_centro)
+    public function show($nr_rm, $ano_rm, $cd_centro)
     {
-        return view('req_material.visualizar');
+        $requisicao = DB::table('REQUISICAO_MATERIAL')
+            ->where('nr_rm', $nr_rm)
+            ->where('ano_rm', $ano_rm)
+            ->where('CD_CENTRO', $cd_centro)
+            ->first();
+
+        $orgao = DB::table('asseplan..centro_custo')
+            ->where('cd_centro', $cd_centro)
+            ->first();
+
+        $orgao_dest = DB::table('asseplan..centro_custo')
+            ->where('cd_centro', $requisicao->CD_CCDEST)
+            ->first();
+
+        $fonte = DB::table('fonte')
+            ->distinct('nm_fonte')
+            ->where('cd_fonte', $requisicao->CD_FONTE)
+            ->get();
+
+//        dd($fonte);
+
+//        dd($requisicao, $orgao, $orgao_dest);
+
+        //        If verifica se o tipo da requisicao é de material ou de servico
+
+        $item = new ItemReqMaterialController();
+
+        if ($requisicao->TP_RM == 1) {
+            $tabela = $item->tabelaMaterial($nr_rm, $ano_rm, $cd_centro);
+        } else {
+            $tabela = $item->tabelaServico($nr_rm, $ano_rm, $cd_centro);
+        }
+
+        return view('req_material.visualizar', compact('requisicao', 'orgao_dest', 'orgao', 'tabela', 'fonte'),
+            ['tipo' => $requisicao->TP_RM]);
     }
 
     /**
@@ -264,9 +298,9 @@ class ReqMaterialController extends Controller
 
         //if = true significa que ja possui itens cadastrados nessa RM, portanto nao sendo possivel alterar de servico para material
 //        ou o contrario
-        if(count($item_rm)){
+        if (count($item_rm)) {
             $opcao_tipo_requisicao = "bloqueado";
-        }else{
+        } else {
             $opcao_tipo_requisicao = "liberado";
         }
 
@@ -275,7 +309,7 @@ class ReqMaterialController extends Controller
         $nr_rm = $id;
 
         return view('req_material.edit', compact('requisicao', 'orgao', 'orgao_dest', 'fonte', 'fonte_aux',
-            'emissor','orgao_dest_aux', 'receptores', 'cd_centro', 'ano_rm', 'nr_rm', 'opcao_tipo_requisicao'));
+            'emissor', 'orgao_dest_aux', 'receptores', 'cd_centro', 'ano_rm', 'nr_rm', 'opcao_tipo_requisicao'));
 
     }
 
@@ -306,11 +340,11 @@ class ReqMaterialController extends Controller
     {
 //        dd($request);
 
-        if($request->cd_fonte == ""){
+        if ($request->cd_fonte == "") {
             $request->cd_fonte = null;
         }
 
-        try{
+        try {
 
             DB::table('Requisicao_Material')
                 ->where('NR_RM', $id)
@@ -332,9 +366,9 @@ class ReqMaterialController extends Controller
 
             alert()->success('Requisição alterada com Sucesso.', '');
 
-            return redirect('req_material/showTable/'.$request->ano_rm.'/'.$request->cd_centro);
+            return redirect('req_material/showTable/' . $request->ano_rm . '/' . $request->cd_centro);
 
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return redirect('req_material')->with('error', 'Algo de errado aconteceu, por favor entre em contato com o NTI.');
         }
     }

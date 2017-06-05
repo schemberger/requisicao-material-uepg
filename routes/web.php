@@ -56,6 +56,8 @@ Route::group(['middleware' => 'sgiauth'], function() {
 
     Route::get('item_req_material/{nr_rm}/{ano_rm}/{cd_centro}/{nr_item}/destroyServico', 'ItemReqMaterialController@destroyServico');
 
+    Route::get('item_req_material/{id}/{data}/{cd_centro}/showItens', 'ItemReqMaterialController@showItens');
+
     Route::put('item_req_material/updateMaterial/{id}', 'ItemReqMaterialController@updateMaterial');
 
     Route::put('item_req_material/updateServico/{id}', 'ItemReqMaterialController@updateServico');

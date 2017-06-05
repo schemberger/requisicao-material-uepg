@@ -7,12 +7,22 @@
 
     <fieldset>
 
+        <!-- Button (Double) -->
+        <div class="form-group">
+            <div class="col-md-8 col-lg-offset-4">
+                <a href="{{url('item_req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/showItens')}}" class="btn btn-primary">Itens</a>
+                <a href="{{url('req_material')}}" class="btn btn-danger">Voltar</a>
+            </div>
+        </div>
+
+        <hr style="height:1px; border:none; color:#000; background-color:#000; margin-top: 0px; margin-bottom: 0px;"/>
+
         <input type="hidden" name="nr_rm" value="{{$nr_rm}}">
         <input type="hidden" name="ano_rm" value="{{$ano_rm}}">
         <input type="hidden" name="cd_centro" value="{{$cd_centro}}">
 
         <!-- Text input-->
-        <div class="form-group">
+        <div class="form-group" style="margin-top: 2%">
             <label class="col-md-4 control-label" for="textinput">Órgão</label>
             <div class="col-md-3">
                 <input id="textinput" name="cd_centro" value="{{$orgao->nm_centro}}" class="form-control input-md"
