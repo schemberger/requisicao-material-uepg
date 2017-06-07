@@ -82,17 +82,17 @@
                             </td>
 
                             <td class="text-center">
-                                <a class="btn btn-info glyphicon glyphicon-search" role="button"
+                                <a class="btn btn-info glyphicon glyphicon-search visualizar" role="button"
                                    href="{{url('req_material/show/'.$ta->nr_rm.'/'.date('Y', strtotime($ta->dt_emissao)).'/'.$ta->CD_CENTRO)}}"></a>
                             </td>
 
                             <td class="text-center">
                                 <a class="btn btn-danger glyphicon glyphicon-trash delete" role="button" id="delete"
-                                   href="{{url('req_material/'.$ta->nr_rm.'/'.date('Y', strtotime($ta->dt_emissao)).'/'.$ta->CD_CENTRO.'/'.'delete')}}"></a>
+                                   href="{{url('req_material/'.$ta->nr_rm.'/'.date('Y', strtotime($ta->dt_emissao)).'/'.$ta->CD_CENTRO.'/delete')}}"></a>
                             </td>
                             <td class="text-center">
                                 <a class="btn btn-warning glyphicon glyphicon-pencil edit" id="edit"
-                                   href="{{url('req_material/'.$ta->nr_rm.'/'.date('Y', strtotime($ta->dt_emissao)).'/'.$ta->CD_CENTRO.'/'.'edit')}}"></a>
+                                   href="{{url('req_material/'.$ta->nr_rm.'/'.date('Y', strtotime($ta->dt_emissao)).'/'.$ta->CD_CENTRO.'/edit')}}"></a>
                             </td>
                         </tr>
                     @endforeach

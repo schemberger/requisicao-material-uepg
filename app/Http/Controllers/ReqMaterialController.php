@@ -430,4 +430,8 @@ class ReqMaterialController extends Controller
             return $nm_centro;
         }
     }
+
+    public function duplicar($nr_rm, $ano_rm, $cd_centro){
+        //muda numero, ano, situcao = null, e pessoa que esta criando req
+    }
 }

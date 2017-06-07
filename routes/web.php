@@ -34,6 +34,8 @@ Route::group(['middleware' => 'sgiauth'], function() {
 
     Route::get('req_material/{id}/{data}/{cd_centro}/edit', 'ReqMaterialController@edit');
 
+    Route::get('req_material/{id}/{data}/{cd_centro}/duplicar', 'ReqMaterialController@duplicar');
+
     Route::get('req_material/showTable/{ano}/{cd}', 'ReqMaterialController@showTable');
 
     Route::get('req_material/create/{id}', 'ReqMaterialController@create');
