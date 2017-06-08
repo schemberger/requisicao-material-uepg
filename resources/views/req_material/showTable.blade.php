@@ -103,6 +103,19 @@
         </div>
     </div>
 
+
+    <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                <div id="data"></div>
+
+            </div>
+        </div>
+    </div>
+
+
 @stop
 
 
@@ -155,7 +168,7 @@
                 this.href = url;
                 window.location = url;
 
-            }else{
+            } else {
                 swal("Selecione uma opção.")
             }
 
@@ -238,9 +251,44 @@
                     if (data.status == "Error") {
                         $('#container').hide();
                         swal("Erro ao Editar!", data.msg, "error");
-                    }else{
+                    } else {
                         window.location.replace(url)
                     }
+                }
+            });
+
+        });
+
+    </script>
+
+    <script>
+
+        $(".visualizar").click(function (event) {
+            event.preventDefault();
+
+            var url = $(this).attr('href');
+
+            swal({
+                title: 'Carregando!',
+                imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif',
+                imageSize: '200x150',
+                animation: false,
+                showConfirmButton: false
+            });
+
+            $.ajax({
+                url: url,
+                type: "get",
+                dataType: "json",
+
+                success: function(data){
+
+                    swal.close();
+
+                    $('#data').html(data);
+
+                    $('#myModal').modal('show');
+
                 }
             });
 
@@ -263,8 +311,8 @@
                 this.href = url;
                 window.location = url;
 
-            }else{
-                $('#novo').prop("disabled",true);
+            } else {
+                $('#novo').prop("disabled", true);
                 swal("Selecione um órgão.")
             }
 

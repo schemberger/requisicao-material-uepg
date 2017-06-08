@@ -5,8 +5,6 @@
 
     <fieldset>
 
-        <input type="hidden" name="ano_rm" value="{{date('Y')}}">
-
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="textinput">Órgão</label>

@@ -161,7 +161,7 @@ class ReqMaterialController extends Controller
             DB::table('Requisicao_Material')->insert([
 
                 'NR_RM' => $request->nr_rm,
-                'ANO_RM' => $request->ano_rm,
+                'ANO_RM' => date('Y'),
                 'CD_CENTRO' => $request->cd_centro,
                 'TP_RM' => $request->tp_rm,
                 'CD_CCDEST' => $request->cd_ccdest,
@@ -235,8 +235,15 @@ class ReqMaterialController extends Controller
             $tabela = $item->tabelaServico($nr_rm, $ano_rm, $cd_centro);
         }
 
-        return view('req_material.visualizar', compact('requisicao', 'orgao_dest', 'orgao', 'tabela', 'fonte'),
-            ['tipo' => $requisicao->TP_RM]);
+//        return response()->json($tabela);
+
+        $html = view('req_material.visualizar', compact('requisicao', 'orgao_dest', 'orgao', 'tabela', 'fonte'),
+            ['tipo' => $requisicao->TP_RM])->render();
+
+        return response()->json($html);
+
+//        return view('req_material.visualizar', compact('requisicao', 'orgao_dest', 'orgao', 'tabela', 'fonte'),
+//            ['tipo' => $requisicao->TP_RM]);
     }
 
     /**
@@ -431,7 +438,82 @@ class ReqMaterialController extends Controller
         }
     }
 
-    public function duplicar($nr_rm, $ano_rm, $cd_centro){
-        //muda numero, ano, situcao = null, e pessoa que esta criando req
+    public function duplicar($nr_rm, $ano_rm, $cd_centro)
+    {
+
+        $requisicao = DB::table('REQUISICAO_MATERIAL')
+            ->where('NR_RM', $nr_rm)
+            ->where('ANO_RM', $ano_rm)
+            ->where('CD_CENTRO', $cd_centro)
+            ->first();
+
+        $aux = DB::table('REQUISICAO_MATERIAL')
+            ->where('CD_CENTRO', $cd_centro)
+            ->where('ANO_RM', date('Y'))
+            ->orderBy('NR_RM', 'desc')
+            ->first();
+
+        $usuario = Auth::user()->username;
+
+        //inicialmente usar usuario trrebonato para fazer busca
+        $emissor = DB::table('acesso_g..usuario')
+            ->where('cd_usuario', 'trrebonato')
+            ->first();
+
+        DB::table('REQUISICAO_MATERIAL')->insert([
+
+            'NR_RM' => $aux->NR_RM + 1,
+            'ANO_RM' => date('Y'),
+            'CD_CENTRO' => $cd_centro,
+            'TP_RM' => $requisicao->TP_RM,
+            'CD_CCDEST' => $requisicao->CD_CCDEST,
+            'COMPL_DEST' => $requisicao->COMPL_DEST,
+            'DT_EMISSAO' => date('Y-m-d'),
+            'EMISSOR' => $emissor->nm_usuario,
+            'LOC_ENTRG' => $requisicao->LOC_ENTRG,
+            'RECEPTOR' => $requisicao->RECEPTOR,
+            'JUSTIFICA' => $requisicao->JUSTIFICA,
+            'OBS' => $requisicao->OBS,
+            'STATUS' => null,
+            'CD_FONTE' => $requisicao->CD_FONTE,
+            'NR_CTAUEPG' => $requisicao->NR_CTAUEPG
+
+        ]);
+
+        $item = DB::table('Item_Rm')
+            ->where('NR_RM', $nr_rm)
+            ->where('ANO_RM', $ano_rm)
+            ->where('CD_CENTRO', $cd_centro)
+            ->get();
+
+        foreach ($item as $item){
+
+            DB::table('Item_Rm')->insert([
+
+                'NR_RM' => $aux->NR_RM + 1,
+                'ANO_RM' => date('Y'),
+                'CD_CENTRO' => $cd_centro,
+                'NR_ITEM' => $item->NR_ITEM,
+                'CD_BEMCAT' => $item->CD_BEMCAT,
+                'CD_ALMOX' => $item->CD_ALMOX,
+                'CD_MATCAT' => $item->CD_MATCAT,
+                'CD_INDMAT' => $item->CD_INDMAT,
+                'DS_SERV' => $item->DS_SERV,
+                'COMPL_ITEMRM' => $item->COMPL_ITEMRM,
+                'QT_ITEM' => $item->QT_ITEM,
+                'VL_UNIT' => $item->VL_UNIT,
+                'QT_EMP' => $item->QT_EMP,
+                'NR_EMP' => $item->NR_EMP,
+                'NR_GT' => $item->NR_GT,
+                'ID_MOEDA' => $item->ID_MOEDA,
+
+            ]);
+
+        }
+
+        alert()->success('Requisição duplicada com Sucesso.', '');
+
+        return redirect('req_material/showTable/'.date('Y').'/'.$cd_centro);
+
     }
 }
