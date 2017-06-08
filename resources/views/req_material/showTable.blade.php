@@ -304,17 +304,29 @@
 
             cd_centro = $('#cd_centro').val();
 
-            if (cd_centro != "Selecione um órgão.") {
+            ano_rm = $('#ano_rm').val();
 
-                url = url + '/' + cd_centro;
+            var d = new Date();
 
-                this.href = url;
-                window.location = url;
+            if(ano_rm >= d.getFullYear()){
 
-            } else {
+                if (cd_centro != "Selecione um órgão.") {
+
+                    url = url + '/' + cd_centro;
+
+                    this.href = url;
+                    window.location = url;
+
+                } else {
+                    $('#novo').prop("disabled", true);
+                    swal("Selecione um órgão.")
+                }
+            }else{
                 $('#novo').prop("disabled", true);
-                swal("Selecione um órgão.")
+                swal("O ano não pode ser menor que o ano atual.")
             }
+
+
 
         });
     </script>

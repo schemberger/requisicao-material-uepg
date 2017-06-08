@@ -446,7 +446,6 @@ class ReqMaterialController extends Controller
             ->where('ANO_RM', $ano_rm)
             ->where('CD_CENTRO', $cd_centro)
             ->first();
-        dd($requisicao);
 
         $aux = DB::table('REQUISICAO_MATERIAL')
             ->where('CD_CENTRO', $cd_centro)
