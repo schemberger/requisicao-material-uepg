@@ -10,7 +10,8 @@
         </script>
     @endif
 
-    {!! Form::model($item, array('url' => 'item_req_material/updateServico/'.$item->NR_ITEM, 'method' => 'put', 'class'=>'top form-horizontal')) !!}
+    {!! Form::model($item, array('url' => 'item_req_material/updateServico/'.$item->NR_ITEM, 'method' => 'put',
+     'class'=>'top form-horizontal', 'id' => 'signupForm')) !!}
 
     <fieldset>
 
@@ -119,6 +120,51 @@
             } else {
                 usedNames[this.text] = this.value;
             }
+        });
+    </script>
+
+    <script>
+        $().ready(function () {
+            var quantidade = $("#qt_item").val().split('.');
+            console.log(quantidade[1]);
+            if(quantidade[1] == "000"){
+                $("#qt_item").val(quantidade[0]);
+            }
+        });
+    </script>
+
+    <script>
+        $().ready(function () {
+
+            $("#signupForm").validate({
+
+                rules: {
+                    qt_item: "required"
+                },
+                messages: {
+                    qt_item: "O campo Quantidade é obrigatório."
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `help-block` class to the error element
+                    error.addClass("help-block");
+
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.parent("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+
+                highlight: function (element, errorClass, validClass) {
+                    $(element).parents(".col-md-2").addClass("has-error").removeClass("has-success");
+                    $(element).parents(".col-md-4").addClass("has-error").removeClass("has-success");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).parents(".col-md-2").addClass("has-success").removeClass("has-error");
+                    $(element).parents(".col-md-4").addClass("has-success").removeClass("has-error");
+                }
+            });
         });
     </script>
 

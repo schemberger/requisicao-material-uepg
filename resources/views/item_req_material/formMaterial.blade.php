@@ -10,16 +10,14 @@
         <input type="hidden" name="ano_rm" value="{{$ano_rm}}">
         <input type="hidden" name="cd_centro" value="{{$cd_centro}}">
 
-    {{--ajax select--}}
-    <!-- Select Basic -->
+        {{--ajax select--}}
+        <!-- Select Basic -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="selectbasic">Material</label>
             <div class="col-md-4">
-
                 <select class="itemName form-control select" name="itemName"></select>
             </div>
         </div>
-
 
         <!-- Textarea -->
         <div class="form-group">
@@ -164,15 +162,18 @@
     </script>
 
     <script>
+
         $().ready(function () {
 
             $("#signupForm").validate({
 
                 rules: {
-                    qt_item: "required"
+                    qt_item: "required",
+                    itemName: { required: true }
                 },
                 messages: {
-                    qt_item: "O campo Quantidade é obrigatório."
+                    qt_item: "O campo Quantidade é obrigatório.",
+                    itemName: "O campo Material é obrigatório."
                 },
                 errorElement: "em",
                 errorPlacement: function (error, element) {
@@ -184,14 +185,31 @@
                     } else {
                         error.insertAfter(element);
                     }
+                    if (element.hasClass('select2-hidden-accessible')) {
+                        error.insertAfter(element.closest('.has-error').find('.select2'));
+                    } else if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
                 },
+
                 highlight: function (element, errorClass, validClass) {
                     $(element).parents(".col-md-2").addClass("has-error").removeClass("has-success");
+                    $(element).parents(".col-md-4").addClass("has-error").removeClass("has-success");
                 },
                 unhighlight: function (element, errorClass, validClass) {
                     $(element).parents(".col-md-2").addClass("has-success").removeClass("has-error");
+                    $(element).parents(".col-md-4").addClass("has-success").removeClass("has-error");
                 }
             });
+        });
+
+        // add valid and remove error classes on select2 element if valid
+        $('.select').on('change', function() {
+            if($(this).valid()) {
+                $(this).next('span').removeClass('error').addClass('valid');
+            }
         });
     </script>
 

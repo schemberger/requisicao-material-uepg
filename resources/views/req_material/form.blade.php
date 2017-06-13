@@ -40,7 +40,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="selectbasic">Órgão de Destino</label>
             <div class="col-md-3">
-                <select name="cd_ccdest" class="form-control select js-example-placeholder-single" id="cd_centro">
+                <select name="cd_ccdest" class="form-control cd_ccdest select">
                     <option value=""></option>
                     @foreach($orgao_dest as $aux)
                         <option value="{{$aux->cd_centro}}">{{$aux->nm_centro}}</option>
@@ -164,62 +164,9 @@
 
 @section('end-script')
 
-    <script>
-        $().ready(function () {
-
-//            $.validator.addMethod("justificativa", function (value) {
-//                return value != "Contact Name";
-//            }, 'Please enter a contact name');
-
-            $("#signupForm").validate({
-                ignore: 'input[type=hidden]',
-                rules: {
-                    loc_entrega: "required",
-                    receptor: "required",
-                    justifica: {
-                        required: true,
-                        minlength: 10
-                    },
-                    cd_centro: {
-                        "required": true
-                    }
-                },
-                messages: {
-                    loc_entrega: "O campo Local de Entrega é obrigatório.",
-                    receptor: "O campo Receptor é obrigatório.",
-                    justifica: {
-                        required: "O campo Justificativa é obrigatório.",
-                        minlength: "O campo Justificativa deve conter no mínimo 10 caracteres."
-                    },
-                    cd_centro: "O campo Órgão de Destino é obrigatório."
-                },
-                errorElement: "em",
-                errorPlacement: function (error, element) {
-                    // Add the `help-block` class to the error element
-                    error.addClass("help-block");
-
-                    if (element.prop("type") === "checkbox") {
-                        error.insertAfter(element.parent("label"));
-                    } else {
-                        error.insertAfter(element);
-                    }
-                },
-                highlight: function (element, errorClass, validClass) {
-                    $(element).parents(".col-md-3").addClass("has-error").removeClass("has-success");
-                    $(element).parents(".col-md-4").addClass("has-error").removeClass("has-success");
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $(element).parents(".col-md-3").addClass("has-success").removeClass("has-error");
-                    $(element).parents(".col-md-4").addClass("has-success").removeClass("has-error");
-                }
-            });
-
-        });
-    </script>
-
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".js-example-placeholder-single").select2({
+            $(".select").select2({
                 placeholder: "Selecione um órgão.",
                 allowClear: true
             });
@@ -244,6 +191,7 @@
 
                     if(isEmptyObject(data)){
                         swal("Nenhum Receptor encontrado.");
+                        $('#receptor').val('');
                     }else{
                         $('#receptor').val(data.RECEPTORES);
                     }
@@ -261,4 +209,66 @@
         }
 
     </script>
+
+    <script>
+        $().ready(function () {
+
+            $("#signupForm").validate({
+                rules: {
+                    loc_entrega: "required",
+                    receptor: "required",
+                    justifica: {
+                        required: true,
+                        minlength: 10
+                    },
+                    cd_ccdest: {
+                        "required": true
+                    }
+                },
+                messages: {
+                    loc_entrega: "O campo Local de Entrega é obrigatório.",
+                    receptor: "O campo Receptor é obrigatório.",
+                    justifica: {
+                        required: "O campo Justificativa é obrigatório.",
+                        minlength: "O campo Justificativa deve conter no mínimo 10 caracteres."
+                    },
+                    cd_ccdest: "O campo Órgão de Destino é obrigatório."
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `help-block` class to the error element
+                    error.addClass("help-block");
+
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.parent("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                    if (element.hasClass('select2-hidden-accessible')) {
+                        error.insertAfter(element.closest('.has-error').find('.select2'));
+                    } else if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).parents(".col-md-3").addClass("has-error").removeClass("has-success");
+                    $(element).parents(".col-md-4").addClass("has-error").removeClass("has-success");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).parents(".col-md-3").addClass("has-success").removeClass("has-error");
+                    $(element).parents(".col-md-4").addClass("has-success").removeClass("has-error");
+                }
+            });
+        });
+
+        // add valid and remove error classes on select2 element if valid
+        $('.select').on('change', function() {
+            if($(this).valid()) {
+                $(this).next('span').removeClass('has-error').addClass('valid');
+            }
+        });
+    </script>
+
 @stop

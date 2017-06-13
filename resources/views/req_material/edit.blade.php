@@ -3,7 +3,8 @@
 
 @section('content')
 
-    {!! Form::model($requisicao, array('url' => 'req_material/'.$requisicao->NR_RM, 'method' => 'put', 'class'=>'top form-horizontal')) !!}
+    {!! Form::model($requisicao, array('url' => 'req_material/'.$requisicao->NR_RM, 'method' => 'put', 'id' => 'signupForm',
+     'class'=>'top form-horizontal')) !!}
 
     <fieldset>
 
@@ -43,7 +44,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="selectbasic">Órgão de Destino</label>
             <div class="col-md-3">
-                <select name="cd_ccdest" class="form-control select js-example-placeholder-single" id="cd_centro">
+                <select name="cd_ccdest" class="form-control select">
                     <option value="{{$requisicao->CD_CCDEST}}">{{$orgao_dest_aux->nm_centro}}</option>
                     @foreach($orgao_dest as $aux)
                         <option value="{{$aux->cd_centro}}">{{$aux->nm_centro}}</option>
@@ -184,7 +185,7 @@
         <!-- Button (Double) -->
         <div class="form-group" style="margin-top: 3%;">
             <div class="col-md-8 col-lg-offset-4">
-                <button type="submit" id="button1id" name="button1id" class="btn btn-success">Confirmar</button>
+                <button type="submit" class="btn btn-success">Confirmar</button>
                 <a href="{{url('req_material')}}" class="btn btn-danger">Voltar</a>
             </div>
         </div>
@@ -196,6 +197,15 @@
 @stop
 
 @section('end-script')
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".select").select2({
+                placeholder: "Selecione um órgão.",
+                allowClear: true
+            });
+        });
+    </script>
 
     <script>
         var usedNames = {};
@@ -225,11 +235,9 @@
 
             var cd_centro = $(this).val();
 
-            console.log(cd_centro);
-
             $.ajax({
 
-                url: +cd_centro + "/receptores",
+                url: '/requisicao_material/public/req_material/create/'+ cd_centro +'/receptores',
                 type: "get",
                 dataType: "json",
                 success: function (data) {
@@ -237,6 +245,7 @@
 
                     if (isEmptyObject(data)) {
                         swal("Nenhum Receptor encontrado.");
+                        $('#receptor').val('');
                     } else {
                         $('#receptor').val(data.RECEPTORES);
                     }
@@ -258,12 +267,7 @@
     <script>
         $().ready(function () {
 
-//            $.validator.addMethod("justificativa", function (value) {
-//                return value != "Contact Name";
-//            }, 'Please enter a contact name');
-
             $("#signupForm").validate({
-                ignore: 'input[type=hidden]',
                 rules: {
                     loc_entrega: "required",
                     receptor: "required",
@@ -271,7 +275,7 @@
                         required: true,
                         minlength: 10
                     },
-                    cd_centro: {
+                    cd_ccdest: {
                         "required": true
                     }
                 },
@@ -282,7 +286,7 @@
                         required: "O campo Justificativa é obrigatório.",
                         minlength: "O campo Justificativa deve conter no mínimo 10 caracteres."
                     },
-                    cd_centro: "O campo Órgão de Destino é obrigatório."
+                    cd_ccdest: "O campo Órgão de Destino é obrigatório."
                 },
                 errorElement: "em",
                 errorPlacement: function (error, element) {
@@ -291,6 +295,13 @@
 
                     if (element.prop("type") === "checkbox") {
                         error.insertAfter(element.parent("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                    if (element.hasClass('select2-hidden-accessible')) {
+                        error.insertAfter(element.closest('.has-error').find('.select2'));
+                    } else if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
                     } else {
                         error.insertAfter(element);
                     }
@@ -304,7 +315,13 @@
                     $(element).parents(".col-md-4").addClass("has-success").removeClass("has-error");
                 }
             });
+        });
 
+        // add valid and remove error classes on select2 element if valid
+        $('.select').on('change', function() {
+            if($(this).valid()) {
+                $(this).next('span').removeClass('has-error').addClass('valid');
+            }
         });
     </script>
 

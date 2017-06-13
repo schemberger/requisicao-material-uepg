@@ -84,9 +84,4 @@ Route::group(['middleware' => 'sgiauth'], function() {
     Route::get('req_material/{id}/{data}/{cd_centro}/edit/validationEdit', 'ReqMaterialController@validationEdit');
 
 
-
-
-
-
-
 });

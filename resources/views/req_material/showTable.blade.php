@@ -111,6 +111,9 @@
 
                 <div id="data"></div>
 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
             </div>
         </div>
     </div>
@@ -325,8 +328,6 @@
                 $('#novo').prop("disabled", true);
                 swal("O ano não pode ser menor que o ano atual.")
             }
-
-
 
         });
     </script>

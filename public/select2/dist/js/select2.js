@@ -4463,7 +4463,7 @@
                 // English
                 return {
                     errorLoading: function () {
-                        return 'The results could not be loaded.';
+                        return 'Os resultados não podem ser carregados.';
                     },
                     inputTooLong: function (args) {
                         var overChars = args.input.length - args.maximum;

@@ -183,9 +183,9 @@ class ReqMaterialController extends Controller
             alert()->success('Requisição incluida com Sucesso.', '');
 
             if ($request->tp_rm == 1) {
-                return redirect('item_req_material/' . $request->nr_rm . '/' . $request->ano_rm . '/' . $request->cd_centro . '/createMaterial');
+                return redirect('item_req_material/' . $request->nr_rm . '/' . date('Y') . '/' . $request->cd_centro . '/createMaterial');
             } else {
-                return redirect('item_req_material/' . $request->nr_rm . '/' . $request->ano_rm . '/' . $request->cd_centro . '/createServico');
+                return redirect('item_req_material/' . $request->nr_rm . '/' . date('Y') . '/' . $request->cd_centro . '/createServico');
             }
 
         } catch (Exception $e) {

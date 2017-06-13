@@ -73,6 +73,8 @@ class ItemReqMaterialController extends Controller
                 $request->vl_unit = null;
             }
 
+            $qt_item = str_replace(",", ".", $request->qt_item);
+
             DB::table('Item_Rm')->insert([
 
                 'NR_RM' => $request->nr_rm,
@@ -85,7 +87,7 @@ class ItemReqMaterialController extends Controller
                 'CD_INDMAT' => $request->itemName[3] . $request->itemName[4] . $request->itemName[5] . $request->itemName[6] . $request->itemName[7],
                 'DS_SERV' => null,
                 'COMPL_ITEMRM' => $request->compl_itemrm,
-                'QT_ITEM' => $request->qt_item,
+                'QT_ITEM' => $qt_item,
                 'VL_UNIT' => $request->vl_unit,
                 'QT_EMP' => null,
                 'NR_EMP' => null,
@@ -131,6 +133,8 @@ class ItemReqMaterialController extends Controller
                 $request->vl_unit = null;
             }
 
+            $qt_item = str_replace(",", ".", $request->qt_item);
+
             DB::table('Item_Rm')->insert([
 
                 'NR_RM' => $request->nr_rm,
@@ -143,7 +147,7 @@ class ItemReqMaterialController extends Controller
                 'CD_INDMAT' => null,
                 'DS_SERV' => $request->ds_serv,
                 'COMPL_ITEMRM' => $request->compl_itemrm,
-                'QT_ITEM' => $request->qt_item,
+                'QT_ITEM' => $qt_item,
                 'VL_UNIT' => $request->vl_unit,
                 'QT_EMP' => null,
                 'NR_EMP' => null,
@@ -290,6 +294,8 @@ class ItemReqMaterialController extends Controller
                 $request->vl_unit = null;
             }
 
+            $qt_item = str_replace(",", ".", $request->qt_item);
+
             DB::table('Item_Rm')
                 ->where('NR_RM', $request->nr_rm)
                 ->where('ANO_RM', $request->ano_rm)
@@ -301,7 +307,7 @@ class ItemReqMaterialController extends Controller
                     'CD_MATCAT' => $request->itemName[1] . $request->itemName[2],
                     'CD_INDMAT' => $request->itemName[3] . $request->itemName[4] . $request->itemName[5] . $request->itemName[6] . $request->itemName[7],
                     'COMPL_ITEMRM' => $request->compl_itemrm,
-                    'QT_ITEM' => $request->qt_item,
+                    'QT_ITEM' => $qt_item,
                     'VL_UNIT' => $request->vl_unit,
                     'ID_MOEDA' => $request->id_moeda
 
@@ -329,6 +335,8 @@ class ItemReqMaterialController extends Controller
                 $request->vl_unit = null;
             }
 
+            $qt_item = str_replace(",", ".", $request->qt_item);
+
             DB::table('Item_Rm')
                 ->where('NR_RM', $request->nr_rm)
                 ->where('ANO_RM', $request->ano_rm)
@@ -338,7 +346,7 @@ class ItemReqMaterialController extends Controller
 
                     'DS_SERV' => $request->ds_serv,
                     'COMPL_ITEMRM' => $request->compl_itemrm,
-                    'QT_ITEM' => $request->qt_item,
+                    'QT_ITEM' => $qt_item,
                     'VL_UNIT' => $request->vl_unit,
                     'ID_MOEDA' => $request->id_moeda
 
@@ -365,12 +373,15 @@ class ItemReqMaterialController extends Controller
      */
     public function destroyMaterial($nr_rm, $ano_rm, $cd_centro, $nr_item)
     {
+
         DB::table('item_rm')
             ->where('NR_RM', $nr_rm)
             ->where('ANO_RM', $ano_rm)
             ->where('CD_CENTRO', $cd_centro)
             ->where('NR_ITEM', $nr_item)
             ->delete();
+
+        $this->ordenacaoItens($nr_rm, $ano_rm, $cd_centro);
 
         alert()->success('Registro Excluido com Sucesso.', '');
 
@@ -392,6 +403,8 @@ class ItemReqMaterialController extends Controller
             ->where('CD_CENTRO', $cd_centro)
             ->where('NR_ITEM', $nr_item)
             ->delete();
+
+        $this->ordenacaoItens($nr_rm, $ano_rm, $cd_centro);
 
         alert()->success('Registro Excluido com Sucesso.', '');
 
@@ -430,6 +443,32 @@ class ItemReqMaterialController extends Controller
             ->get();
 
         return $tabela;
+    }
+
+    public function ordenacaoItens($nr_rm, $ano_rm, $cd_centro){
+
+        $aux = DB::table('item_rm')
+            ->where('NR_RM', $nr_rm)
+            ->where('ANO_RM', $ano_rm)
+            ->where('CD_CENTRO', $cd_centro)
+            ->select('NR_ITEM')
+            ->get();
+
+        $numero_item = 1;
+
+        foreach ($aux as $a){
+
+            DB::table('item_rm')
+                ->where('NR_RM', $nr_rm)
+                ->where('ANO_RM', $ano_rm)
+                ->where('CD_CENTRO', $cd_centro)
+                ->where('NR_ITEM', $a->NR_ITEM)
+                ->update([
+                    'NR_ITEM' => $numero_item
+                ]);
+            $numero_item ++;
+        }
+
     }
 
 }

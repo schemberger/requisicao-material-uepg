@@ -50,7 +50,12 @@
                                 </td>
 
                                 <td class="text-center">
-                                    {{$ta->QT_ITEM}}
+                                    <?php $aux = explode('.', $ta->QT_ITEM) ?>
+                                    @if($aux[1] == "000")
+                                        {{$aux[0]}}
+                                    @elseif($aux[1] != "000")
+                                        {{$ta->QT_ITEM}}
+                                    @endif
                                 </td>
 
                                 <td class="text-center" id="valor">
@@ -98,7 +103,7 @@
             </div>
             <div class="col-md-2 col-md-offset-2">
                 <a class="btn btn-default btn-primary btn-lg glyphicon glyphicon-plus"
-                   href="{{url('item_req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/createMaterial')}}" role="button"> Novo</a>
+                   href="{{url('item_req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/createServico')}}" role="button"> Novo</a>
             </div>
         </div>
 
@@ -129,7 +134,12 @@
                                 </td>
 
                                 <td class="text-center">
-                                    {{$ta->QT_ITEM}}
+                                    <?php $aux = explode('.', $ta->QT_ITEM) ?>
+                                    @if($aux[1] == "000")
+                                        {{$aux[0]}}
+                                    @elseif($aux[1] != "000")
+                                        {{$ta->QT_ITEM}}
+                                    @endif
                                 </td>
 
                                 <td class="text-center" id="valor">

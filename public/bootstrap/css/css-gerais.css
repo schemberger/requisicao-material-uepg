@@ -29,3 +29,8 @@ css form gerais
 .tabela{
     margin-top: 4%;
 }
+
+.has-error .select2 {
+    border: 1px solid #a94442;
+    border-radius: 4px;
+}
