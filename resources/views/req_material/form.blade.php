@@ -179,11 +179,9 @@
 
             var cd_centro = $(this).val();
 
-            console.log(cd_centro);
-
             $.ajax({
 
-                url: +cd_centro + "/receptores",
+                url: + cd_centro + "/receptores",
                 type: "get",
                 dataType: "json",
                 success: function (data) {

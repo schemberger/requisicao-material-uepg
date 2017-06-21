@@ -44,7 +44,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="selectbasic">Órgão de Destino</label>
             <div class="col-md-3">
-                <select name="cd_ccdest" class="form-control select">
+                <select name="cd_ccdest" class="form-control select" href="{{url('/req_material/create')}}">
                     <option value="{{$requisicao->CD_CCDEST}}">{{$orgao_dest_aux->nm_centro}}</option>
                     @foreach($orgao_dest as $aux)
                         <option value="{{$aux->cd_centro}}">{{$aux->nm_centro}}</option>
@@ -235,9 +235,11 @@
 
             var cd_centro = $(this).val();
 
+            var url = $(this).attr('href');
+
             $.ajax({
 
-                url: '/requisicao_material/public/req_material/create/'+ cd_centro +'/receptores',
+                url: url + '/' + cd_centro +'/receptores',
                 type: "get",
                 dataType: "json",
                 success: function (data) {
@@ -249,7 +251,6 @@
                     } else {
                         $('#receptor').val(data.RECEPTORES);
                     }
-
                 }
             });
         });
