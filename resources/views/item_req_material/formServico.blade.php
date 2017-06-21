@@ -72,7 +72,7 @@
             <div class="col-md-8 col-lg-offset-4">
                 <button type="submit" id="button1id" name="button1id" class="btn btn-success">Inserir</button>
                 <a href="{{url('req_material')}}" class="btn btn-primary">Imprimir</a>
-                <a href="{{url('req_material')}}" class="btn btn-danger">Voltar</a>
+                <a href="{{URL::previous()}}" class="btn btn-danger teste">Voltar</a>
             </div>
         </div>
 
@@ -113,6 +113,19 @@
 
                 window.location.href = url;
                 });
+        });
+    </script>
+
+    <script>
+        $().ready(function () {
+
+            var url = $(".teste").attr('href');
+
+            var aux = url.substr(url.lastIndexOf('/') + 1);
+
+            if(aux != 'showItens'){
+                $(".teste").attr('href', '{{url('req_material')}}')
+            }
         });
     </script>
 

@@ -12,7 +12,7 @@
         <div class="form-group">
             <div class="col-md-8 col-lg-offset-4">
                 <a href="{{url('item_req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/showItens')}}" class="btn btn-primary">Itens</a>
-                <a href="{{url('req_material')}}" class="btn btn-danger">Voltar</a>
+                <a href="{{url('req_material/showTable/'.$ano_rm.'/'.$cd_centro)}}" class="btn btn-danger">Voltar</a>
             </div>
         </div>
 
@@ -186,7 +186,7 @@
         <div class="form-group" style="margin-top: 3%;">
             <div class="col-md-8 col-lg-offset-4">
                 <button type="submit" class="btn btn-success">Confirmar</button>
-                <a href="{{url('req_material')}}" class="btn btn-danger">Voltar</a>
+                <a href="{{url('req_material/showTable/'.$ano_rm.'/'.$cd_centro)}}" class="btn btn-danger">Voltar</a>
             </div>
         </div>
 

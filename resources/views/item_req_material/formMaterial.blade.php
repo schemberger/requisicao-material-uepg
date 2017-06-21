@@ -10,8 +10,8 @@
         <input type="hidden" name="ano_rm" value="{{$ano_rm}}">
         <input type="hidden" name="cd_centro" value="{{$cd_centro}}">
 
-        {{--ajax select--}}
-        <!-- Select Basic -->
+    {{--ajax select--}}
+    <!-- Select Basic -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="selectbasic">Material</label>
             <div class="col-md-4">
@@ -81,7 +81,7 @@
             <div class="col-md-8 col-lg-offset-4">
                 <button type="submit" id="button1id" name="button1id" class="btn btn-success">Inserir</button>
                 <a href="{{url('req_material')}}" class="btn btn-primary">Imprimir</a>
-                <a href="{{url('req_material')}}" class="btn btn-danger">Voltar</a>
+                <a href="{{URL::previous()}}" class="btn btn-danger teste">Voltar</a>
             </div>
         </div>
 
@@ -132,7 +132,6 @@
             minimumInputLength: 3,
             ajax: {
                 url: '{{url('/item_req_material/searchItem')}}',
-//                url: '/requisicao_material/public/item_req_material/searchItem',
                 dataType: 'json',
                 delay: 250,
                 processResults: function (data) {
@@ -163,6 +162,19 @@
     </script>
 
     <script>
+        $().ready(function () {
+
+            var url = $(".teste").attr('href');
+
+            var aux = url.substr(url.lastIndexOf('/') + 1);
+
+            if(aux != 'showItens'){
+                $(".teste").attr('href', '{{url('req_material')}}')
+            }
+        });
+    </script>
+
+    <script>
 
         $().ready(function () {
 
@@ -170,7 +182,7 @@
 
                 rules: {
                     qt_item: "required",
-                    itemName: { required: true }
+                    itemName: {required: true}
                 },
                 messages: {
                     qt_item: "O campo Quantidade é obrigatório.",
@@ -207,8 +219,8 @@
         });
 
         // add valid and remove error classes on select2 element if valid
-        $('.select').on('change', function() {
-            if($(this).valid()) {
+        $('.select').on('change', function () {
+            if ($(this).valid()) {
                 $(this).next('span').removeClass('error').addClass('valid');
             }
         });

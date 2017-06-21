@@ -7,14 +7,16 @@
 
         <div style="margin-top: 2%;" class="row">
             <div class="col-md-1 col-md-offset-2">
-                <a href="{{url('req_material')}}" class="btn btn-danger btn-lg glyphicon glyphicon-arrow-left "> Voltar</a>
+                <a href="{{url('req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/edit')}}"
+                class="btn btn-danger btn-lg glyphicon glyphicon-arrow-left "> Voltar</a>
             </div>
             <div class="col-md-2 col-md-offset-2">
                 <a href="{{url('#')}}" class="btn btn-success btn-lg glyphicon glyphicon-print"> Imprimir</a>
             </div>
             <div class="col-md-2 col-md-offset-2">
                 <a class="btn btn-default btn-primary btn-lg glyphicon glyphicon-plus"
-                   href="{{url('item_req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/createMaterial')}}" role="button"> Novo</a>
+                   href="{{url('item_req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/createMaterial')}}"
+                   role="button"> Novo</a>
             </div>
         </div>
 
@@ -96,14 +98,16 @@
 
         <div style="margin-top: 2%;" class="row">
             <div class="col-md-1 col-md-offset-2">
-                <a href="{{url('req_material')}}" class="btn btn-danger btn-lg glyphicon glyphicon-arrow-left "> Voltar</a>
+                <a href="{{url('req_material')}}" class="btn btn-danger btn-lg glyphicon glyphicon-arrow-left ">
+                    Voltar</a>
             </div>
             <div class="col-md-2 col-md-offset-2">
                 <a href="{{url('#')}}" class="btn btn-success btn-lg glyphicon glyphicon-print"> Imprimir</a>
             </div>
             <div class="col-md-2 col-md-offset-2">
                 <a class="btn btn-default btn-primary btn-lg glyphicon glyphicon-plus"
-                   href="{{url('item_req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/createServico')}}" role="button"> Novo</a>
+                   href="{{url('item_req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/createServico')}}"
+                   role="button"> Novo</a>
             </div>
         </div>
 
@@ -204,6 +208,12 @@
 
                 window.location.href = url;
             });
+        });
+    </script>
+
+    <script>
+        $().ready(function () {
+            console.log($(".teste").attr('href'));
         });
     </script>
 
