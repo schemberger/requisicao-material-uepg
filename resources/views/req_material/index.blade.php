@@ -63,7 +63,7 @@
 
             var cd_centro = $('#cd_centro').val();
 
-            if (cd_centro != "Selecione uma opção") {
+            if (cd_centro != "Selecione um órgão.") {
 
                 url = url + '/' + ano_rm + '/' + cd_centro;
 
