@@ -131,7 +131,8 @@
             placeholder: 'Selecione um material.',
             minimumInputLength: 3,
             ajax: {
-                url: '/requisicao_material/public/item_req_material/searchItem',
+                url: '{{url('/item_req_material/searchItem')}}',
+//                url: '/requisicao_material/public/item_req_material/searchItem',
                 dataType: 'json',
                 delay: 250,
                 processResults: function (data) {
