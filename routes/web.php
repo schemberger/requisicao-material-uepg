@@ -72,6 +72,10 @@ Route::group(['middleware' => 'sgiauth'], function() {
 
     Route::resource('item_req_material', 'ItemReqMaterialController');
 
+    // Rotas para impressao de relatorios
+
+    Route::get('relatorio/material/{id}/{data}/{cd_centro}', 'ImprimirRmController@index');
+
 
 //    Requisicao ajax montar tabela index req. materiais
 
@@ -82,6 +86,5 @@ Route::group(['middleware' => 'sgiauth'], function() {
     Route::get('item_req_material/getUnidade/{codigo}', 'ItemReqMaterialController@getUnidade');
 
     Route::get('req_material/{id}/{data}/{cd_centro}/edit/validationEdit', 'ReqMaterialController@validationEdit');
-
 
 });

@@ -9,7 +9,7 @@
 
         <div class="navbar-header pull-left">
             <a class="navbar-brand" href="{{url('/')}}">
-                <img src="{{ asset ('imagens/controladoria.png')}}" alt="UEPG - Universidade Estadual de Ponta Grossa"
+                <img alt="UEPG - Universidade Estadual de Ponta Grossa"
                      class="img-responsive" style="margin-top: -4px;">
             </a>
         </div>
