@@ -5,21 +5,21 @@
 
     @if($tipo == 1)
 
-        <div style="margin-top: 2%;" class="row">
-            <div class="col-md-1 col-md-offset-2">
-                <a href="{{url('req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/edit')}}"
-                class="btn btn-danger btn-lg glyphicon glyphicon-arrow-left "> Voltar</a>
-            </div>
-            <div class="col-md-2 col-md-offset-2">
-                <a href="{{url('relatorio/material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro)}}"
-                   class="btn btn-success btn-lg glyphicon glyphicon-print"> Imprimir</a>
-            </div>
-            <div class="col-md-2 col-md-offset-2">
-                <a class="btn btn-default btn-primary btn-lg glyphicon glyphicon-plus"
-                   href="{{url('item_req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/createMaterial')}}"
-                   role="button"> Novo</a>
-            </div>
-        </div>
+        {{--<div style="margin-top: 2%;" class="row">--}}
+            {{--<div class="col-md-1 col-md-offset-2">--}}
+                {{--<a href="{{url('req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/edit')}}"--}}
+                   {{--class="btn btn-danger btn-lg glyphicon glyphicon-arrow-left "> Voltar</a>--}}
+            {{--</div>--}}
+            {{--<div class="col-md-2 col-md-offset-2">--}}
+                {{--<a href="{{url('relatorio/material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro)}}"--}}
+                   {{--class="btn btn-success btn-lg glyphicon glyphicon-print"> Imprimir</a>--}}
+            {{--</div>--}}
+            {{--<div class="col-md-2 col-md-offset-2">--}}
+                {{--<a class="btn btn-default btn-primary btn-lg glyphicon glyphicon-plus"--}}
+                   {{--href="{{url('item_req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/createMaterial')}}"--}}
+                   {{--role="button"> Novo</a>--}}
+            {{--</div>--}}
+        {{--</div>--}}
 
         <div id="table">
             <div class="row">
@@ -186,36 +186,6 @@
 
 @section('end-script')
 
-    <script>
-        $(".delete").click(function (event) {
-            event.preventDefault();
 
-            var url = $(this).attr('href');
-
-            console.log(url);
-
-            swal({
-                title: "Tem certeza?",
-                text: "Você não será capaz de recuperar esse dado.",
-                type: "warning",
-                showCancelButton: true,
-                cancelButtonText: "Cancelar",
-                cancelButtonColor: "#DD6B55",
-                confirmButtonColor: "#5cb85c",
-                confirmButtonText: "Confirmar",
-                closeOnConfirm: false
-            }, function (isConfirm) {
-                if (!isConfirm) return;
-
-                window.location.href = url;
-            });
-        });
-    </script>
-
-    <script>
-        $().ready(function () {
-            console.log($(".teste").attr('href'));
-        });
-    </script>
 
 @endsection

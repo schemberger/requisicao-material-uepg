@@ -76,6 +76,12 @@ Route::group(['middleware' => 'sgiauth'], function() {
 
     Route::get('relatorio/material/{id}/{data}/{cd_centro}', 'ImprimirRmController@index');
 
+    // Rotas para destino de itens
+
+    Route::get('destino/{id}/{data}/{cd_centro}/{nr_item}', 'DestinoController@index');
+
+    Route::resource('destino', 'DestinoController');
+
 
 //    Requisicao ajax montar tabela index req. materiais
 
