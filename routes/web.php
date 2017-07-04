@@ -80,6 +80,12 @@ Route::group(['middleware' => 'sgiauth'], function() {
 
     Route::get('destino/{id}/{data}/{cd_centro}/{nr_item}', 'DestinoController@index');
 
+    Route::get('destino/{id}/{data}/{cd_centro}/{nr_item}/create', 'DestinoController@create');
+
+    Route::get('destino/{id}/{data}/{cd_centro}/{nr_item}/{nr_item_destino}/edit', 'DestinoController@edit');
+
+    Route::put('destino/update/{id}', 'DestinoController@update');
+
     Route::resource('destino', 'DestinoController');
 
 
@@ -92,5 +98,9 @@ Route::group(['middleware' => 'sgiauth'], function() {
     Route::get('item_req_material/getUnidade/{codigo}', 'ItemReqMaterialController@getUnidade');
 
     Route::get('req_material/{id}/{data}/{cd_centro}/edit/validationEdit', 'ReqMaterialController@validationEdit');
+
+    Route::get('destino/{id}/{data}/{cd_centro}/{nr_item}/create/validationNovo', 'DestinoController@validationNovo');
+
+    Route::get('destino/{id}/{data}/{cd_centro}/{nr_item}/{nr_item_destino}/destroy', 'DestinoController@destroy');
 
 });

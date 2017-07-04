@@ -2,7 +2,9 @@
 
 @section('content')
 
-    {!! Form::open(array('url' => 'destino', 'class'=>'form-horizontal top', 'id' => 'signupForm')) !!}
+
+    {!! Form::model($destino, array('url' => 'destino/update/'.$destino->NR_ITEM_DESTINO, 'method' => 'put',
+         'class'=>'top form-horizontal', 'id' => 'signupForm')) !!}
 
     <fieldset>
 
@@ -11,7 +13,7 @@
             <label class="col-md-4 control-label" for="selectbasic">Órgão de Destino</label>
             <div class="col-md-3">
                 <select name="cd_ccdest" class="form-control cd_ccdest select">
-                    <option value=""></option>
+                    <option value="{{$orgao_dest_atual->cd_centro}}">{{$orgao_dest_atual->nm_centro}}</option>
                     @foreach($orgao_dest as $aux)
                         <option value="{{$aux->cd_centro}}">{{$aux->nm_centro}}</option>
                     @endforeach
@@ -24,7 +26,7 @@
             <label class="col-md-4 control-label" for="selectbasic">Local de Entrega</label>
             <div class="col-md-3">
                 <select name="cd_local" class="form-control cd_local">
-                    <option value=""></option>
+                    <option value="{{$local_entrega_atual->CD_LOCAL}}">{{$local_entrega_atual->NM_LOCAL}}</option>
                     @foreach($local_entrega as $aux)
                         <option value="{{$aux->CD_LOCAL}}">{{$aux->NM_LOCAL}}</option>
                     @endforeach
@@ -36,7 +38,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="textinput">Complemento do Destino</label>
             <div class="col-md-3">
-                <input id="textinput" name="compl_destrmd" placeholder="Complemento do Destino"
+                <input id="textinput" name="compl_destrmd" value="{{$destino->COMPL_DESTRMD}}"
                        class="form-control input-md" type="text">
             </div>
             <div class="col-md-1"><span>* Opcional</span></div>
@@ -46,7 +48,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="textinput">Quantidade</label>
             <div class="col-md-2">
-                <input id="qt_item" name="qt_itemd" placeholder="Quantidade"
+                <input id="qt_itemd" name="qt_itemd" value="{{$destino->QT_ITEMD}}"
                        class="form-control input-md qt_item" type="text">
             </div>
         </div>
@@ -55,7 +57,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="textinput">Nº Conta Contábil</label>
             <div class="col-md-2">
-                <input id="textinput" name="nr_ctauepg" placeholder="Nº Conta Contábil"
+                <input id="textinput" name="nr_ctauepg" value="{{$destino->NR_CTAUEPG}}"
                        class="form-control input-md" type="text">
             </div>
             <div class="col-md-1"><span>* Opcional</span></div>
@@ -65,16 +67,16 @@
         <div class="form-group" style="margin-top: 3%;">
             <div class="col-md-8 col-lg-offset-4">
                 <button type="submit" id="button1id" name="button1id" class="btn btn-success">Confirmar</button>
-                <a href="{{url('item_req_material/'.$item->NR_RM .'/'. $item->ANO_RM.'/'.$item->CD_CENTRO.'/showItens')}}"
+                <a href="{{url('destino/'.$destino->NR_RM .'/'. $destino->ANO_RM.'/'.$destino->CD_CENTRO.'/'. $destino->NR_ITEM)}}"
                    class="btn btn-danger">Voltar</a>
             </div>
         </div>
 
-        <input id="quantidade" type="hidden" value="{{$quantidade_restante}}">
-        <input type="hidden" name="nr_rm" value="{{$item->NR_RM}}">
-        <input type="hidden" name="ano_rm" value="{{$item->ANO_RM}}">
-        <input type="hidden" name="cd_centro" value="{{$item->CD_CENTRO}}">
-        <input type="hidden" name="nr_item" value="{{$item->NR_ITEM}}">
+    <input id="quantidade" type="hidden" value="{{$item->QT_ITEM}}">
+    <input type="hidden" name="nr_rm" value="{{$item->NR_RM}}">
+    <input type="hidden" name="ano_rm" value="{{$item->ANO_RM}}">
+    <input type="hidden" name="cd_centro" value="{{$item->CD_CENTRO}}">
+    <input type="hidden" name="nr_item" value="{{$item->NR_ITEM}}">
 
 
     </fieldset>
@@ -85,12 +87,25 @@
 
 @section('end-script')
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".select").select2({
-                placeholder: "Selecione um órgão.",
-                allowClear: true
-            });
+    <script>
+        var usedNames = {};
+        $("select[name='cd_local'] > option").each(function () {
+            if (usedNames[this.text]) {
+                $(this).remove();
+            } else {
+                usedNames[this.text] = this.value;
+            }
+        });
+    </script>
+
+    <script>
+        var usedNames = {};
+        $("select[name='cd_ccdest'] > option").each(function () {
+            if (usedNames[this.text]) {
+                $(this).remove();
+            } else {
+                usedNames[this.text] = this.value;
+            }
         });
     </script>
 
@@ -101,13 +116,30 @@
             var aux = $('#quantidade').val();
             var qntd = $('#qt_item').val();
 
-            console.log(parseInt(aux));
 
             if (qntd >  parseInt(aux)) {
-                swal("Restam apenas " + parseInt(aux) + " itens para cadastro de novo destino.");
+                swal("A quantidade informada é maior que a quantidade cadastrada.");
             }
         });
 
+    </script>
+
+    <script>
+        $().ready(function () {
+            var quantidade = $("#qt_itemd").val().split('.');
+            console.log(quantidade[1]);
+            if(quantidade[1] == "000"){
+                $("#qt_itemd").val(quantidade[0]);
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".select").select2({
+                allowClear: true
+            });
+        });
     </script>
 
     <script>
@@ -120,7 +152,7 @@
                     cd_local: "required",
                     qt_itemd: {
                         required: true,
-                        max: parseInt(qt_item)
+                        max: qt_item
                     },
                     cd_ccdest: {
                         "required": true
@@ -171,4 +203,4 @@
         });
     </script>
 
-@stop
+@endsection

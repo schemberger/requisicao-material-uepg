@@ -439,7 +439,7 @@ class ItemReqMaterialController extends Controller
             ->where('ano_rm', $ano_rm)
             ->where('cd_centro', $cd_centro)
             ->where('item_rm.CD_ALMOX', '!=', null)
-            ->orderBy('estoque..material.NM_MAT')
+            ->orderBy('item_rm.NR_ITEM')
             ->get();
 
         return $tabela;

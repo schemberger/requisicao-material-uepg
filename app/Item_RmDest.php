@@ -11,6 +11,6 @@ class Item_RmDest extends Model
 
     public $timestamps = false;
 
-    protected $primaryKey = 'NR_RM, ANO_RM, CD_CENTRO, NR_ITEM';
+    protected $primaryKey = 'NR_RM, ANO_RM, CD_CENTRO, NR_ITEM, NR_ITEM_DESTINO';
 
 }
