@@ -193,7 +193,7 @@
             swal({
                 title: "Tem certeza?",
                 text: "Você não será capaz de recuperar esse dado.",
-                type: "warning",
+                imageUrl: "{{ asset('/imagens/question.jpg') }}",
                 showCancelButton: true,
                 cancelButtonText: "Cancelar",
                 cancelButtonColor: "#DD6B55",

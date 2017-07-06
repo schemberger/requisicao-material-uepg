@@ -7,10 +7,15 @@
 
     <div class="navbar navbar-default" role="navigation">
 
-        <div class="navbar-header pull-left">
-            <a class="navbar-brand" href="{{url('/')}}">
-                <img alt="UEPG - Universidade Estadual de Ponta Grossa"
-                     class="img-responsive" style="margin-top: -4px;">
+        <div class="navbar-header pull-left img-container-logo col-md-2">
+            <a href="http://portal.uepg.br/">
+                <img src="{{ asset('/imagens/uepg.jpg') }}">
+            </a>
+        </div>
+
+        <div class="navbar-header col-md-4 col-md-offset-5">
+            <a href="{{url('/')}}">
+                <h3 style="color: #000;">Sistema de Compras</h3>
             </a>
         </div>
 
@@ -76,7 +81,7 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="{{url ('/')}}">Requisição de Material </a>
+                            <a class="navbar-brand">Requisição de Material </a>
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->

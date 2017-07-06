@@ -43,6 +43,8 @@
     {{--Máscara moedas--}}
     <script src="{{ asset('/bootstrap/js/jquery.maskMoney.js') }}"></script>
 
+    <link href="{{ asset('/imagens/logo2.ico') }}" rel="shortcut icon" type="image/x-icon">
+
     {{--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />--}}
     {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>--}}
 

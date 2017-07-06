@@ -174,9 +174,10 @@ class ItemReqMaterialController extends Controller
 
         $item = DB::table('estoque..MATERIAL')
             ->select(DB::raw('Convert(varchar(10),cd_almox)+CD_MATCAT+CD_INDMAT AS codigo,UNI_MATCAT 
-                AS unidade, NM_MAT AS nome, convert(varchar(250),COMPL_MAT)'))
+                AS unidade, NM_MAT AS nome, convert(varchar(250),COMPL_MAT) AS complemento'))
             ->where('ATIVO', 'S')
             ->where('NM_MAT', 'like', '%' . $request->q . '%')
+            ->orderBy('NM_MAT', 'ASC')
             ->get();
 
         return response()->json($item);

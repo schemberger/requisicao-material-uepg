@@ -63,15 +63,10 @@
 
         <input type="hidden" id="uni" name="uni" value="">
 
-
-    {{--complemento box ckeditor--}}
-
-
     <!-- Button (Double) -->
         <div class="form-group" style="margin-top: 3%;">
             <div class="col-md-8 col-lg-offset-4">
                 <button type="submit" id="button1id" name="button1id" class="btn btn-success">Inserir</button>
-                <a href="{{url('req_material')}}" class="btn btn-primary">Imprimir</a>
                 <a href="{{URL::previous()}}" class="btn btn-danger teste">Voltar</a>
             </div>
         </div>

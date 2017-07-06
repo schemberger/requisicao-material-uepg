@@ -117,6 +117,7 @@ class ReqMaterialController extends Controller
         $orgao_dest = DB::table('asseplan..centro_custo')
             ->select('nm_centro', 'cd_centro')
             ->where('tp_ativ_dest', 'N')
+            ->orderBy('nm_centro', 'ASC')
             ->get();
 
         $orgao = DB::table('asseplan..centro_custo')
@@ -221,10 +222,6 @@ class ReqMaterialController extends Controller
             ->where('cd_fonte', $requisicao->CD_FONTE)
             ->get();
 
-//        dd($fonte);
-
-//        dd($requisicao, $orgao, $orgao_dest);
-
         //        If verifica se o tipo da requisicao é de material ou de servico
 
         $item = new ItemReqMaterialController();
@@ -242,8 +239,6 @@ class ReqMaterialController extends Controller
 
         return response()->json($html);
 
-//        return view('req_material.visualizar', compact('requisicao', 'orgao_dest', 'orgao', 'tabela', 'fonte'),
-//            ['tipo' => $requisicao->TP_RM]);
     }
 
     /**
@@ -268,6 +263,7 @@ class ReqMaterialController extends Controller
         $orgao_dest = DB::table('asseplan..centro_custo')
             ->select('nm_centro', 'cd_centro')
             ->where('tp_ativ_dest', 'N')
+            ->orderBy('nm_centro', 'ASC')
             ->get();
 
         $orgao_dest_aux = DB::table('asseplan..centro_custo')
@@ -288,7 +284,7 @@ class ReqMaterialController extends Controller
             ->distinct('nm_fonte')
             ->where('cd_fonte', $requisicao->CD_FONTE)
             ->where('cd_ativo', 'S')
-            ->get();
+            ->first();
 
         $usuario = Auth::user()->username;
 

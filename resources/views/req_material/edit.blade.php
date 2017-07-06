@@ -246,7 +246,6 @@
                     console.log(data);
 
                     if (isEmptyObject(data)) {
-                        swal("Nenhum Receptor encontrado.");
                         $('#receptor').val('');
                     } else {
                         $('#receptor').val(data.RECEPTORES);

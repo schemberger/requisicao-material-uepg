@@ -2,13 +2,12 @@
     <div class="container-fluid">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                    <h4 class="panel-title">
+                <div class="modal-header" role="tab" id="headingOne">
+                    <div class="col-md-2">
                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
-                           aria-expanded="true" aria-controls="collapseOne">
-                            Detalhes da Requisição
-                        </a>
-                    </h4>
+                           aria-expanded="true" aria-controls="collapseOne" class="btn btn-info btn-lg"
+                           href="">Detalhes da Requisição</a>
+                    </div>
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
@@ -65,8 +64,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
         <div style="margin-top: 3%" class="col-md-offset-1" id="info">
             <div class="col-xs-12">
                 <div class="col-md-3">
@@ -95,6 +94,7 @@
                     <div class="col-xs-12 col-md-10 col-lg-offset-1">
                         <table class="table table-striped teste">
                             <thead>
+                            <th>N°</th>
                             <th class="col-xs-6">Descrição do Item</th>
                             <th>Unidade</th>
                             <th>Quantidade</th>
@@ -104,8 +104,27 @@
                             @foreach($tabela as $ta)
 
                                 <tr>
+                                    <td>{{$ta->NR_ITEM}}</td>
                                     <td>
-                                        {{$ta->NM_MAT}}
+                                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                            <div>
+                                                <div class="panel-heading" role="tab" id="headingTwo">
+                                                    <h4 class="panel-title">
+                                                        <a class="collapsed" role="button" data-toggle="collapse"
+                                                           data-parent="#accordion" href="#{{$ta->NR_ITEM}}"
+                                                           aria-expanded="false" aria-controls="collapseTwo">
+                                                            {{str_limit($ta->NM_MAT, $limit = 50, $end = '...')}}
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="{{$ta->NR_ITEM}}" class="panel-collapse collapse" role="tabpanel"
+                                                     aria-labelledby="headingTwo">
+                                                    <div class="panel-body">
+                                                        {{$ta->NM_MAT}} {{$ta->COMPL_MAT}} {{$ta->COMPL_ITEMRM}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
 
                                     <td class="text-center">
@@ -164,7 +183,7 @@
                                         @if($aux[1] == "000")
                                             {{$aux[0]}}
                                         @elseif($aux[1] != "000")
-                                                {{$ta->QT_ITEM}}
+                                            {{$ta->QT_ITEM}}
                                         @endif
                                     </td>
 
@@ -192,9 +211,12 @@
     </div>
 
     <div class="col-md-offset-5" style="margin-top: 2%;">
-        <a name="button1id" class="btn btn-primary btn-lg"
+        <a name="button1id" class="btn btn-warning btn-lg"
            href="{{url('req_material/'.$requisicao->NR_RM.'/'.date('Y', strtotime($requisicao->DT_EMISSAO)).'/'.$requisicao->CD_CENTRO.'/duplicar')}}">
             Duplicar Requisição</a>
+
+        <a name="button1id" class="btn btn-success btn-lg"
+           href="">Imprimir</a>
     </div>
     <div style="margin-top: 1%"></div>
 </div>

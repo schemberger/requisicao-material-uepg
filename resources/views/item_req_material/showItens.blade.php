@@ -8,7 +8,7 @@
         <div style="margin-top: 2%;" class="row">
             <div class="col-md-1 col-md-offset-2">
                 <a href="{{url('req_material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro.'/edit')}}"
-                class="btn btn-danger btn-lg glyphicon glyphicon-arrow-left "> Voltar</a>
+                   class="btn btn-danger btn-lg glyphicon glyphicon-arrow-left "> Voltar</a>
             </div>
             <div class="col-md-2 col-md-offset-2">
                 <a href="{{url('relatorio/material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro)}}"
@@ -26,6 +26,7 @@
                 <div class="col-xs-12 col-md-10 col-lg-offset-1">
                     <table class="table table-striped teste" style="margin-top: 2%;">
                         <thead>
+                        <th>Nº</th>
                         <th class="col-xs-6">Descrição do Item</th>
                         <th>Unidade</th>
                         <th>Quantidade</th>
@@ -45,7 +46,28 @@
 
                             <tr>
                                 <td>
-                                    {{$ta->NM_MAT}}
+                                    {{$ta->NR_ITEM}}
+                                </td>
+                                <td>
+                                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                        <div>
+                                            <div class="panel-heading" role="tab" id="headingTwo">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse"
+                                                       data-parent="#accordion" href="#{{$ta->NR_ITEM}}"
+                                                       aria-expanded="false" aria-controls="collapseTwo">
+                                                        {{str_limit($ta->NM_MAT, $limit = 50, $end = '...')}}
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="{{$ta->NR_ITEM}}" class="panel-collapse collapse" role="tabpanel"
+                                                 aria-labelledby="headingTwo">
+                                                <div class="panel-body">
+                                                    {{$ta->NM_MAT}} {{$ta->COMPL_MAT}} {{$ta->COMPL_ITEMRM}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
 
                                 <td class="text-center">
@@ -117,6 +139,7 @@
                 <div class="col-xs-12 col-md-10 col-lg-offset-1">
                     <table class="table table-striped tabela teste">
                         <thead>
+                        <th>Nº</th>
                         <th class="col-xs-6">Descrição do Serviço</th>
                         <th>Quantidade</th>
                         <th>Valor Unitário</th>
@@ -134,6 +157,9 @@
                         @foreach($tabela as $ta)
 
                             <tr>
+                                <td>
+                                    {{$ta->NR_ITEM}}
+                                </td>
                                 <td>
                                     {{$ta->DS_SERV}}
                                 </td>
