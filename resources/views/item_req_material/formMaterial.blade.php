@@ -88,12 +88,6 @@
 
 @section('end-script')
 
-    <script type="text/javascript">
-        $(function () {
-            $("#vl_unit").maskMoney();
-        })
-    </script>
-
     <script>
         $(".delete").click(function (event) {
             event.preventDefault();
@@ -173,15 +167,28 @@
 
         $().ready(function () {
 
+            // faz com que a regra number aceite como separador a virgula além do ponto.
+            $.validator.methods.number = function (value, element) {
+                return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+            };
+
             $("#signupForm").validate({
 
                 rules: {
-                    qt_item: "required",
-                    itemName: {required: true}
+                    qt_item: {
+                        required: true,
+                        number: true
+                    },
+                    itemName: {required: true},
+                    vl_unit: "number"
                 },
                 messages: {
-                    qt_item: "O campo Quantidade é obrigatório.",
-                    itemName: "O campo Material é obrigatório."
+                    qt_item: {
+                        required: "O campo Quantidade é obrigatório.",
+                        number: "O campo Quantidade deve conter apenas números ou no formato 0,00."
+                    },
+                    itemName: "O campo Material é obrigatório.",
+                    vl_unit: "O campo Valor Unitário deve conter apenas números ou no formato 0,00."
                 },
                 errorElement: "em",
                 errorPlacement: function (error, element) {

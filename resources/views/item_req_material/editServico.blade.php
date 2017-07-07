@@ -106,12 +106,6 @@
 
 @section('end-script')
 
-    <script type="text/javascript">
-        $(function () {
-            $("#vl_unit").maskMoney();
-        })
-    </script>
-
     <script>
         var usedNames = {};
         $("select[name='id_moeda'] > option").each(function () {
@@ -136,13 +130,20 @@
     <script>
         $().ready(function () {
 
+            $.validator.methods.number = function (value, element) {
+                return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+            };
+
+
             $("#signupForm").validate({
 
                 rules: {
-                    qt_item: "required"
+                    qt_item: "required",
+                    vl_unit: "required"
                 },
                 messages: {
-                    qt_item: "O campo Quantidade é obrigatório."
+                    qt_item: "O campo Quantidade é obrigatório.",
+                    vl_unit: "O campo Valor Unitário deve conter apenas números ou no formato 0,00."
                 },
                 errorElement: "em",
                 errorPlacement: function (error, element) {
