@@ -85,8 +85,15 @@
 
                                 <td class="text-center" id="valor">
                                     @if($ta->VL_UNIT != null)
-                                        R$
-                                        {{money_format('%i' ,$ta->VL_UNIT)}}
+
+                                        <?php $aux = explode('.', $ta->VL_UNIT);?>
+
+                                        @if($aux[1] == "00000000")
+                                            R$ {{money_format('%i' ,$ta->VL_UNIT)}}
+                                        @else
+                                            R$ {{$aux[0]}}.{{str_limit($aux[1], $limit = 4, $end = '')}}
+                                        @endif
+
                                     @endif
                                 </td>
 
@@ -175,8 +182,15 @@
 
                                 <td class="text-center" id="valor">
                                     @if($ta->VL_UNIT != null)
-                                        R$
-                                        {{money_format('%i' ,$ta->VL_UNIT)}}
+
+                                        <?php $aux = explode('.', $ta->VL_UNIT);?>
+
+                                        @if($aux[1] == "00000000")
+                                            R$ {{money_format('%i' ,$ta->VL_UNIT)}}
+                                        @else
+                                            R$ {{$aux[0]}}.{{str_limit($aux[1], $limit = 4, $end = '')}}
+                                        @endif
+
                                     @endif
                                 </td>
 

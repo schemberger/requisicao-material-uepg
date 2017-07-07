@@ -61,7 +61,6 @@ class ItemReqMaterialController extends Controller
 
         if (count($aux)) {
             $nr_item = $aux->nr_item + 1;
-
         } else {
             $nr_item = 1;
         }
@@ -74,6 +73,7 @@ class ItemReqMaterialController extends Controller
             }
 
             $qt_item = str_replace(",", ".", $request->qt_item);
+            $vl_unit = str_replace(",", ".", $request->vl_unit);
 
             DB::table('Item_Rm')->insert([
 
@@ -88,14 +88,14 @@ class ItemReqMaterialController extends Controller
                 'DS_SERV' => null,
                 'COMPL_ITEMRM' => $request->compl_itemrm,
                 'QT_ITEM' => $qt_item,
-                'VL_UNIT' => $request->vl_unit,
+                'VL_UNIT' => $vl_unit,
                 'QT_EMP' => null,
                 'NR_EMP' => null,
                 'NR_GT' => null,
                 'ID_MOEDA' => $request->id_moeda
 
             ]);
-
+dd();
             $nr_rm = $request->nr_rm;
             $ano_rm = $request->ano_rm;
             $cd_centro = $request->cd_centro;
@@ -134,6 +134,7 @@ class ItemReqMaterialController extends Controller
             }
 
             $qt_item = str_replace(",", ".", $request->qt_item);
+            $vl_unit = str_replace(",", ".", $request->vl_unit);
 
             DB::table('Item_Rm')->insert([
 
@@ -148,7 +149,7 @@ class ItemReqMaterialController extends Controller
                 'DS_SERV' => $request->ds_serv,
                 'COMPL_ITEMRM' => $request->compl_itemrm,
                 'QT_ITEM' => $qt_item,
-                'VL_UNIT' => $request->vl_unit,
+                'VL_UNIT' => $vl_unit,
                 'QT_EMP' => null,
                 'NR_EMP' => null,
                 'NR_GT' => null,
