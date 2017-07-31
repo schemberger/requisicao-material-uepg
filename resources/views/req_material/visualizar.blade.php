@@ -215,8 +215,8 @@
            href="{{url('req_material/'.$requisicao->NR_RM.'/'.date('Y', strtotime($requisicao->DT_EMISSAO)).'/'.$requisicao->CD_CENTRO.'/duplicar')}}">
             Duplicar Requisição</a>
 
-        <a name="button1id" class="btn btn-success btn-lg"
-           href="">Imprimir</a>
+        <a name="button1id" class="btn btn-success btn-lg" target="_blank"
+           href="{{url('relatorio/material/'.$requisicao->NR_RM.'/'.date('Y', strtotime($requisicao->DT_EMISSAO)).'/'.$requisicao->CD_CENTRO)}}">Imprimir</a>
     </div>
     <div style="margin-top: 1%"></div>
 </div>

@@ -11,7 +11,7 @@
                    class="btn btn-danger btn-lg glyphicon glyphicon-arrow-left "> Voltar</a>
             </div>
             <div class="col-md-2 col-md-offset-2">
-                <a href="{{url('relatorio/material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro)}}"
+                <a href="{{url('relatorio/material/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro)}}" target="_blank"
                    class="btn btn-success btn-lg glyphicon glyphicon-print"> Imprimir</a>
             </div>
             <div class="col-md-2 col-md-offset-2">
@@ -132,7 +132,7 @@
                     Voltar</a>
             </div>
             <div class="col-md-2 col-md-offset-2">
-                <a href="{{url('#')}}" class="btn btn-success btn-lg glyphicon glyphicon-print"> Imprimir</a>
+                <a href="{{url('#')}}" class="btn btn-success btn-lg glyphicon glyphicon-print" target="_blank"> Imprimir</a>
             </div>
             <div class="col-md-2 col-md-offset-2">
                 <a class="btn btn-default btn-primary btn-lg glyphicon glyphicon-plus"
