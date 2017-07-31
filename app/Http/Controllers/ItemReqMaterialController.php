@@ -95,7 +95,7 @@ class ItemReqMaterialController extends Controller
                 'ID_MOEDA' => $request->id_moeda
 
             ]);
-dd();
+
             $nr_rm = $request->nr_rm;
             $ano_rm = $request->ano_rm;
             $cd_centro = $request->cd_centro;

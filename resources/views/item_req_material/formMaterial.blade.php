@@ -140,10 +140,10 @@
             var codigo = $(".itemName option:last-child").text();
 
             var aux = codigo.split(' - ');
+            
+            $('#unidade').val(aux[aux.length-1]);
 
-            $('#unidade').val(aux[1]);
-
-            $('#uni').val(aux[1]);
+            $('#uni').val(aux[aux.length-1]);
 
             $('#descMaterial').val(aux[0]);
         });
