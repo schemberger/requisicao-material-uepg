@@ -61,7 +61,7 @@
             </div>
         </div>
 
-    @if($item->VL_UNIT == null)
+    @if($item->ID_MOEDA == null)
 
         <!-- Select Basic -->
             <div class="form-group">
@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-    @elseif($item->VL_UNIT != null)
+    @elseif($item->ID_MOEDA != null)
 
         <!-- Select Basic -->
             <div class="form-group">
