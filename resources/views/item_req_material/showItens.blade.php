@@ -132,7 +132,8 @@
                     Voltar</a>
             </div>
             <div class="col-md-2 col-md-offset-2">
-                <a href="{{url('#')}}" class="btn btn-success btn-lg glyphicon glyphicon-print" target="_blank"> Imprimir</a>
+                <a href="{{url('relatorio/servico/'.$nr_rm.'/'.$ano_rm.'/'.$cd_centro)}}" target="_blank"
+                   class="btn btn-success btn-lg glyphicon glyphicon-print"> Imprimir</a>
             </div>
             <div class="col-md-2 col-md-offset-2">
                 <a class="btn btn-default btn-primary btn-lg glyphicon glyphicon-plus"

@@ -57,7 +57,8 @@ Route::group(['middleware' => 'sgiauth'], function() {
 
     // Rotas para impressao de relatorios
 
-    Route::get('relatorio/material/{id}/{data}/{cd_centro}', 'ImprimirRmController@index');
+    Route::get('relatorio/material/{id}/{data}/{cd_centro}', 'ImprimirRmController@material');
+    Route::get('relatorio/servico/{id}/{data}/{cd_centro}', 'ImprimirRmController@servico');
 
     // Rotas para destino de itens
 

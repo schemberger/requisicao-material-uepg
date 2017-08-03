@@ -14,6 +14,12 @@
     <script src="{{ asset('/bootstrap/js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}"></script>
 
+    <style>
+        thead{
+            display: table-row-group;
+        }
+    </style>
+
 </head>
 <body>
 

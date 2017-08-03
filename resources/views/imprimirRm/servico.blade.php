@@ -12,8 +12,7 @@
                         <table class="table table-striped">
                             <thead style="font-size: 12px">
                             <th class="text-left">Quant.</th>
-                            <th class="text-left">Unid.</th>
-                            <th class="text-center col-xs-8">Discriminação do Material</th>
+                            <th class="text-center col-xs-8">Discriminação do Serviço</th>
                             <th class="pull-right">Valor</th>
                             @foreach($item as $ta)
 
@@ -27,12 +26,8 @@
                                         @endif
                                     </td>
 
-                                    <td class="text-left">
-                                        {{$ta->UNI_MATCAT}}
-                                    </td>
-
-                                    <td style="text-align: justify">
-                                        {{$ta->NM_MAT}}
+                                    <td style="text-align: justify;">
+                                        {{$ta->DS_SERV}}
                                     </td>
 
                                     <td class="text-right" id="valor">
@@ -41,7 +36,6 @@
                                             {{money_format('%i' ,$ta->VL_UNIT)}}
                                         @endif
                                     </td>
-
                                 </tr>
                             @endforeach
 

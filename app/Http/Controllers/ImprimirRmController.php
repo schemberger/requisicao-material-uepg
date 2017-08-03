@@ -13,7 +13,7 @@ class ImprimirRmController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($nr_rm, $ano_rm, $cd_centro)
+    public function material($nr_rm, $ano_rm, $cd_centro)
     {
 
         $requisicao = DB::table('REQUISICAO_MATERIAL')
@@ -32,19 +32,47 @@ class ImprimirRmController extends Controller
 
         $item = $this->tabelaMaterial($nr_rm, $ano_rm, $cd_centro);
 
-//        dd($requisicao, $orgao_destino, $orgao, $item);
-
-
-        $pdf = PDF::loadView('imprimirRm.material', compact('requisicao', 'orgao_destino', 'item'))
+        $pdf = PDF::loadView('imprimirRm.material', compact('item'))
             ->setOption('header-html', view('layouts.relatorio.header', compact('requisicao', 'orgao')))
             ->setOption('header-spacing', 6)
-            ->setOption('footer-html', view('layouts.relatorio.footer'))
+            ->setOption('footer-html', view('layouts.relatorio.footer', compact('requisicao', 'orgao_destino')))
             ->setOption('footer-spacing', 6)
-            ->setOption('margin-bottom', 27)
+            ->setOption('margin-bottom', 70)
             ->setPaper('A4');
 
         return $pdf->inline();
-//        return view('imprimirRm.material', compact('requisicao'));
+    }
+
+    public function servico($nr_rm, $ano_rm, $cd_centro)
+    {
+
+        $requisicao = DB::table('REQUISICAO_MATERIAL')
+            ->where('nr_rm', $nr_rm)
+            ->where('ano_rm', $ano_rm)
+            ->where('CD_CENTRO', $cd_centro)
+            ->first();
+
+        $orgao = DB::table('asseplan..centro_custo')
+            ->where('cd_centro', $cd_centro)
+            ->first();
+
+        $orgao_destino = DB::table('asseplan..centro_custo')
+            ->where('cd_centro', $requisicao->CD_CCDEST)
+            ->first();
+
+        $item = $this->tabelaServico($nr_rm, $ano_rm, $cd_centro);
+
+//        dd($requisicao, $orgao_destino, $orgao, $item);
+
+        $pdf = PDF::loadView('imprimirRm.servico', compact('item'))
+            ->setOption('header-html', view('layouts.relatorio.header', compact('requisicao', 'orgao')))
+            ->setOption('header-spacing', 6)
+            ->setOption('footer-html', view('layouts.relatorio.footer', compact('requisicao', 'orgao_destino')))
+            ->setOption('footer-spacing', 6)
+            ->setOption('margin-bottom', 70)
+            ->setPaper('A4');
+
+        return $pdf->inline();
     }
 
     /**
@@ -111,6 +139,21 @@ class ImprimirRmController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function tabelaServico($nr_rm, $ano_rm, $cd_centro)
+    {
+
+        $tabela = DB::table('item_rm')
+            ->leftJoin('DIFI..AC_MOEDA', 'DIFI..AC_MOEDA.ID_MOEDA', '=', 'item_rm.ID_MOEDA')
+            ->where('nr_rm', $nr_rm)
+            ->where('ano_rm', $ano_rm)
+            ->where('cd_centro', $cd_centro)
+            ->orderBy('item_rm.nr_item')
+            ->get();
+
+        return $tabela;
+
     }
 
     public function tabelaMaterial($nr_rm, $ano_rm, $cd_centro)

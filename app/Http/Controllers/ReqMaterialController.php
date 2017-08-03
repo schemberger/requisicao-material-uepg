@@ -149,8 +149,6 @@ class ReqMaterialController extends Controller
     public function store(Request $request)
     {
 
-//        dd($request);
-
         $dt_emissao = explode('/', $request->dt_emissao, 3);
 
         try {
