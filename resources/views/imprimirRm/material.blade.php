@@ -2,7 +2,6 @@
 
 @section('relatorio')
 
-
     <div class="row">
         <div class="col-lg-offset-1">
 

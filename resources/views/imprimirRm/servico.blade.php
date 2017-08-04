@@ -8,7 +8,7 @@
 
             <div id="table">
                 <div class="row">
-                    <div class="col-xs-10 col-xs-offset-1" style="margin-top: 2%; page-break-inside: avoid">
+                    <div class="col-xs-10 col-xs-offset-1" style="margin-top: 12%; page-break-inside: avoid">
                         <table class="table table-striped">
                             <thead style="font-size: 12px">
                             <th class="text-left">Quant.</th>

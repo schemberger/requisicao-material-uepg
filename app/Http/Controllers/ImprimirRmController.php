@@ -62,7 +62,7 @@ class ImprimirRmController extends Controller
 
         $item = $this->tabelaServico($nr_rm, $ano_rm, $cd_centro);
 
-//        dd($requisicao, $orgao_destino, $orgao, $item);
+        dd($requisicao, $orgao_destino, $orgao, $item);
 
         $pdf = PDF::loadView('imprimirRm.servico', compact('item'))
             ->setOption('header-html', view('layouts.relatorio.header', compact('requisicao', 'orgao')))

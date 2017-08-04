@@ -48,7 +48,7 @@
 
         <div style="padding-top: 4%;">
             <div class="col-xs-2 col-xs-offset-1">
-                <img src="{{ asset ('imagens/UEPG-logo.jpg')}}"
+                <img src="{{ asset ('imagens/uepg-logo.jpg')}}"
                      alt="UEPG - Universidade Estadual de Ponta Grossa"
                      class="img-responsive" style="height: 50px; width: 60px;">
             </div>

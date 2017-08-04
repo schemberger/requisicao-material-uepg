@@ -25,16 +25,15 @@
     <script src="{!! asset('bootstrap/js/jquery-1.2.6.pack.js') !!}"></script>
     <script src="{!! asset('bootstrap/js/jquery.maskedinput-1.1.4.pack.js') !!}"></script>
 
-    <script src="{!! asset('sweetalert-master/dist/sweetalert.min.js') !!}"></script>
-
     <script src="{{ asset('/bootstrap/js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}"></script>
+
+    <script src="{!! asset('sweetalert-master/dist/sweetalert.min.js') !!}"></script>
 
     {{--Link para plugin validacao jquery--}}
     <script src="{{ asset('validation/dist/jquery.validate.js') }}"></script>
 
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
 
     {{--Link para componente autocomplete usado em view--}}
     <script src="{{ asset('/select2/dist/js/select2.js') }}"></script>
@@ -44,9 +43,6 @@
     <script src="{{ asset('/bootstrap/js/jquery.maskMoney.js') }}"></script>
 
     <link href="{{ asset('/imagens/logo2.ico') }}" rel="shortcut icon" type="image/x-icon">
-
-    {{--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />--}}
-    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>--}}
 
     <script type="text/javascript">
         $.ajaxSetup({

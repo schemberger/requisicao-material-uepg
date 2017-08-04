@@ -1,0 +1,37 @@
+/*html { font-size: 93.1%; }*/
+/*body { height: 88mm; }*/
+
+/*!*–––––––––––––––––––––––– system hacks –––––––––––––––––––––––– *!*/
+
+/*!***/
+ /** Unix* system based servers render font much*/
+ /** bigger than windows based server.*/
+ /** Force windows font to 100% and rescale the*/
+ /** linux rendering by the magic factor (1.33)*/
+ /**!*/
+/*.linux {*/
+    /*font-size: 70%;*/
+/*}*/
+
+/*!***/
+ /** base size: 88mm*/
+ /***/
+ /** for wkhtmltopdf generation,*/
+ /** body size must be multiplied by 1.33 factor on windows systems*/
+ /**!*/
+/*.win body {*/
+    /*height: 117.04mm;*/
+/*}*/
+
+/*.footer{*/
+    /*-moz-box-sizing: content-box;*/
+    /*-webkit-box-sizing: content-box;*/
+    /*box-sizing: content-box;*/
+    /*background: #FC0;*/
+    /*font-family: "Helvetica-Neue", Helvetica, sans-serif;*/
+    /*height:155mm;*/
+    /*page-break-after: auto;*/
+    /*display: block;*/
+    /*clear: both;*/
+    /*border: 1px solid #000;*/
+/*}*/
