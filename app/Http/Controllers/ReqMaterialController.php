@@ -96,7 +96,6 @@ class ReqMaterialController extends Controller
             ->first();
 
         if (count($aux)) {
-//            dd($aux);
             $nr_rm = $aux->NR_RM + 1;
         } else {
             $nr_rm = 1;
@@ -124,12 +123,13 @@ class ReqMaterialController extends Controller
             ->where('cd_centro', $id)
             ->first();
 
-
         return view('req_material.form', compact('emissor', 'fonte', 'orgao_dest', 'orgao', 'nr_rm'));
     }
 
     public function receptores($cd_centro)
     {
+
+        // chamada ajax realizada no lado do cliente para atualizar o campo receptores no formulario de RM.
 
         $receptores = DB::table('estoque..RECEPTOR_CC')
             ->select('RECEPTORES')
@@ -177,7 +177,7 @@ class ReqMaterialController extends Controller
 
             ]);
 
-            //Requisicao for do tipo Material
+            // if tp_rm == 1 RM do tipo material, caso tp_rm == 2 entao RM do tipo servico
 
             alert()->success('Requisição incluida com Sucesso.', '');
 
@@ -220,7 +220,7 @@ class ReqMaterialController extends Controller
             ->where('cd_fonte', $requisicao->CD_FONTE)
             ->get();
 
-        //        If verifica se o tipo da requisicao é de material ou de servico
+        //If verifica se o tipo da requisicao é de material ou de servico
 
         $item = new ItemReqMaterialController();
 
@@ -229,8 +229,6 @@ class ReqMaterialController extends Controller
         } else {
             $tabela = $item->tabelaServico($nr_rm, $ano_rm, $cd_centro);
         }
-
-//        return response()->json($tabela);
 
         $html = view('req_material.visualizar', compact('requisicao', 'orgao_dest', 'orgao', 'tabela', 'fonte'),
             ['tipo' => $requisicao->TP_RM])->render();
@@ -298,14 +296,13 @@ class ReqMaterialController extends Controller
             ->get();
 
         //if = true significa que ja possui itens cadastrados nessa RM, portanto nao sendo possivel alterar de servico para material
-//        ou o contrario
+        //ou o contrario
         if (count($item_rm)) {
             $opcao_tipo_requisicao = "bloqueado";
         } else {
             $opcao_tipo_requisicao = "liberado";
         }
 
-        $cd_centro = $cd_centro;
         $ano_rm = $data;
         $nr_rm = $id;
 
@@ -316,6 +313,9 @@ class ReqMaterialController extends Controller
 
     public function validationEdit($nr_rm, $dt_emissao, $cd_centro)
     {
+
+        // chamada ajax realizada pelo cliente para verificar se a RM pode ser editada, caso não, uma mensagem de erro é retornada
+        // sem a necessidade de atualização de pagina.
 
         $aux = DB::table('QC_RM')
             ->where('nr_rm', $nr_rm)
@@ -339,7 +339,8 @@ class ReqMaterialController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        dd($request);
+
+        // a troca abaixo para null é necessaria para evitar o erro no update do sybase.
 
         if ($request->cd_fonte == "") {
             $request->cd_fonte = null;

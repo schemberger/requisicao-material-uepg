@@ -21,6 +21,7 @@ Route::post(config('sgiauthorizer.app.loginRoute'), '\Uepg\SGIAuthorizer\Auth\Co
 Route::get('/logout', ['as' => 'logout', 'uses' => '\Uepg\SGIAuthorizer\Auth\Controllers\LoginController@logout']);
 
 Route::group(['middleware' => 'sgiauth'], function() {
+
     Route::any(config('sgiauthorizer.app.userInfoRoute'), ['uses' => '\Uepg\SGIAuthorizer\Auth\Controllers\DisplayUserInfoController@userInfo']);
 
     Route::get('/', function () {
@@ -69,7 +70,7 @@ Route::group(['middleware' => 'sgiauth'], function() {
 
     Route::resource('destino', 'DestinoController');
 
-//    Requisicao ajax
+    //Requisicao ajax
 
     Route::get('req_material/{id}/{data}/{cd_centro}/delete', 'ReqMaterialController@destroy');
 
