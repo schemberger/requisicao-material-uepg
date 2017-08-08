@@ -388,6 +388,10 @@ class ReqMaterialController extends Controller
             ->where('CD_CENTRO', $cd_centro)
             ->first();
 
+        // A verificação acima valida se a requisição ja foi enviada para orcamento ou nao.
+        // caso a consulta retorne algum valor, significa que ja tenha sido enviado para orçamento.
+        // neste caso a RM não podera ser excluida devendo retornar uma mensagem de erro para o usuario.
+
         if (count($aux)) {
             return response()->json(array('msg' => 'O registro não pode ser excluido pois esta em processo de Orçamento', 'status' => 'Error'));
         } else {
@@ -449,10 +453,15 @@ class ReqMaterialController extends Controller
 
         $usuario = Auth::user()->username;
 
-        //inicialmente usar usuario trrebonato para fazer busca
+        // inicialmente usar usuario trrebonato para fazer busca
+        // quando passar para o servidor de desenvolvimento, alterar o 'trrebonato' da consulta para a variavel $usuario.
+
         $emissor = DB::table('acesso_g..usuario')
             ->where('cd_usuario', 'trrebonato')
             ->first();
+
+        // quando duplicado a RM, é alterado apenas o ANO_RM para o ano atual, a DT_EMISSAO para a data atual e o NR_RM
+        // pega o ultimo NR_RM + 1
 
         DB::table('REQUISICAO_MATERIAL')->insert([
 
@@ -473,6 +482,9 @@ class ReqMaterialController extends Controller
             'NR_CTAUEPG' => $requisicao->NR_CTAUEPG
 
         ]);
+
+        // Quando duplicado a RM, os itens também são duplicados para a nova RM sendo necessãrio criar na tabela Item_Rm
+        // cadastros com os itens existentes na RM antiga.
 
         $item = DB::table('Item_Rm')
             ->where('NR_RM', $nr_rm)
